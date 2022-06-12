@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 soccerstats.csv
+.DS_Store
