@@ -22,12 +22,28 @@ def get_tomorrow_date():
     tdate = datetime.date.today() + datetime.timedelta(days=1)
     return str(tdate).replace("-", "")
 
+def clean_ligue_string(string):
+    if (string[0] == ' '):
+        return string[1:]
+    return string
+
 def create_json_from_data(data):
     ret_data = []
     begin = ""
     temp_obj = {}
+    toto = False
+    previous_item = ''
+    previous_ligue = ''
+    current_ligue = ''
 
     for item in data:
+        if (item == "»" or toto == True):
+            if (toto):
+                current_ligue = clean_ligue_string(previous_ligue) + '/' +  clean_ligue_string(item)
+                toto = False
+            else:
+                toto = True
+                previous_ligue = previous_item
         if (item.isnumeric() and begin == 'Step5'):
             temp_obj["bs"] = copy.deepcopy(item)
             begin = ""
@@ -45,6 +61,9 @@ def create_json_from_data(data):
         if ("-" in item and begin == ""):
             begin = "Step2"
             temp_obj["match"] = copy.deepcopy(re.sub("^[\d\s\:]+", '', item))
+        if (current_ligue):
+            temp_obj["ligue"] = current_ligue
+        previous_item = item
     return ret_data
 
 def scraper(tdate):
