@@ -86,9 +86,13 @@ def scraper(tdate):
     driver.refresh()
     tbody = driver.find_element_by_xpath('//*[@id="table-matches"]/table/tbody')
     data = tbody.text.replace(" 1 X 2 B's", "")
+    links = []
+    for elem in driver.find_elements_by_xpath("//a[@href]"):
+        links.append(elem.get_attribute("href"))
     driver.quit()
-    return (data.splitlines())
+    return (data.splitlines(), links)
 
-data = scraper(get_tomorrow_date())
+data, links = scraper(get_tomorrow_date())
 print(json.dumps(create_json_from_data(data), indent=4))
+print(links)
 # https://www.oddsportal.com/soccer/usa/usl-league-two/dayton-kings-hammer-Qys3cgmn/#over-under;2
