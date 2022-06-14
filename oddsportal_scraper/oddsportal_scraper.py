@@ -1,8 +1,10 @@
+from glob import escape
 import re
 import json
 import datetime
 from time import sleep
 import copy
+from difflib import SequenceMatcher
 from coockies import coockies
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -26,6 +28,17 @@ def clean_ligue_string(string):
     if (string[0] == ' '):
         return string[1:]
     return string
+
+def extract_link_to_oe(ligue, links):
+    highest = 0
+    ret_link = ""
+
+    for link in links:
+        ratio = SequenceMatcher(None, ligue, link).ratio()
+        if (ratio > highest):
+            highest = ratio
+            ret_link = link
+    return ret_link + "#over-under;2"
 
 def create_json_from_data(data):
     ret_data = []
@@ -92,7 +105,30 @@ def scraper(tdate):
     driver.quit()
     return (data.splitlines(), links)
 
+def create_oe_links(matchs, links):
+    for match in matchs:
+        ligue = match.get("ligue").replace(" ", "-").lower()        
+        link = "https://www.oddsportal.com/soccer/" + ligue + "/" + match.get("match").replace(" ", "-").lower()
+        link = link.replace("---", "-")
+        match["mabite"] = link
+        match["oe_link"] = extract_link_to_oe(link, links)
+
 data, links = scraper(get_tomorrow_date())
-print(json.dumps(create_json_from_data(data), indent=4))
-print(links)
+data = create_json_from_data(data)
+create_oe_links(data, links)
+
+print(json.dumps(data, indent=4))
+# print(extract_link_to_oe("https://www.oddsportal.com/soccer/argentina/liga-profesional/talleres-cordoba-newells-old-boys" ,links))
+# https://www.oddsportal.com/soccer/argentina/liga-profesional/talleres-cordoba-newells-old-boys-xjmv8869/
+# print(links)
 # https://www.oddsportal.com/soccer/usa/usl-league-two/dayton-kings-hammer-Qys3cgmn/#over-under;2
+
+# https://www.oddsportal.com/soccer/morocco/botola-pro/olympique-khouribga-chabab-mohammedia-CIAc17YB/
+
+
+
+
+
+
+# https://www.oddsportal.com/soccer/sweden/division-2-norra-svealand/korsnas-kvarnsveden-bw5uJRke/#over-under;2
+# https://www.oddsportal.com/soccer/sweden/division-2-norra-svealand/#over-under;2
