@@ -1,4 +1,3 @@
-from glob import escape
 import re
 import json
 import datetime
@@ -54,24 +53,26 @@ def create_json_from_data(data):
             if (toto):
                 current_ligue = clean_ligue_string(previous_ligue) + '/' +  clean_ligue_string(item)
                 toto = False
+                begin = "Step1"
+                continue
             else:
                 toto = True
                 previous_ligue = previous_item
         if (item.isnumeric() and begin == 'Step5'):
-            temp_obj["bs"] = copy.deepcopy(item)
+            temp_obj["bs"] = item
             begin = ""
             ret_data.append(copy.deepcopy(temp_obj))
             temp_obj = {}
         if (isfloat(item) and begin == 'Step4'):
-            temp_obj["2"] = copy.deepcopy(item)
+            temp_obj["2"] = item
             begin = "Step5"
         if (isfloat(item) and begin == 'Step3'):
-            temp_obj["X"] = copy.deepcopy(item)
+            temp_obj["X"] = item
             begin = "Step4"
         if (isfloat(item) and begin == 'Step2'):
-            temp_obj["1"] = copy.deepcopy(item)
+            temp_obj["1"] = item
             begin = "Step3"
-        if ("-" in item and begin == ""):
+        if ("-" in item and begin == "Step1"):
             begin = "Step2"
             temp_obj["match"] = copy.deepcopy(re.sub("^[\d\s\:]+", '', item))
         if (current_ligue):
@@ -110,7 +111,6 @@ def create_oe_links(matchs, links):
         ligue = match.get("ligue").replace(" ", "-").lower()        
         link = "https://www.oddsportal.com/soccer/" + ligue + "/" + match.get("match").replace(" ", "-").lower()
         link = link.replace("---", "-")
-        match["mabite"] = link
         match["oe_link"] = extract_link_to_oe(link, links)
 
 data, links = scraper(get_tomorrow_date())
@@ -118,17 +118,3 @@ data = create_json_from_data(data)
 create_oe_links(data, links)
 
 print(json.dumps(data, indent=4))
-# print(extract_link_to_oe("https://www.oddsportal.com/soccer/argentina/liga-profesional/talleres-cordoba-newells-old-boys" ,links))
-# https://www.oddsportal.com/soccer/argentina/liga-profesional/talleres-cordoba-newells-old-boys-xjmv8869/
-# print(links)
-# https://www.oddsportal.com/soccer/usa/usl-league-two/dayton-kings-hammer-Qys3cgmn/#over-under;2
-
-# https://www.oddsportal.com/soccer/morocco/botola-pro/olympique-khouribga-chabab-mohammedia-CIAc17YB/
-
-
-
-
-
-
-# https://www.oddsportal.com/soccer/sweden/division-2-norra-svealand/korsnas-kvarnsveden-bw5uJRke/#over-under;2
-# https://www.oddsportal.com/soccer/sweden/division-2-norra-svealand/#over-under;2
