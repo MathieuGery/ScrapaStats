@@ -7,6 +7,7 @@ from difflib import SequenceMatcher
 from coockies import coockies
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from oddsportal_ou_scraper import ou_scraper
 
 def isfloat(num):
     try:
@@ -111,10 +112,15 @@ def create_oe_links(matchs, links):
         ligue = match.get("ligue").replace(" ", "-").lower()        
         link = "https://www.oddsportal.com/soccer/" + ligue + "/" + match.get("match").replace(" ", "-").lower()
         link = link.replace("---", "-")
-        match["oe_link"] = extract_link_to_oe(link, links)
+        match["ou_link"] = extract_link_to_oe(link, links)
+
+def get_all_the_ou_stats(matchs):
+    for match in matchs:
+        match["ou_stats"] = ou_scraper(match.get("ou_link"))
 
 data, links = scraper(get_tomorrow_date())
 data = create_json_from_data(data)
 create_oe_links(data, links)
+get_all_the_ou_stats(data)
 
 print(json.dumps(data, indent=4))
