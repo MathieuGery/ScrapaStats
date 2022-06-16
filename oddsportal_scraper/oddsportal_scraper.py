@@ -1,13 +1,15 @@
+from asyncore import write
 import re
 import json
 import datetime
 from time import sleep
 import copy
 from difflib import SequenceMatcher
-from coockies import coockies
+from .coockies import coockies
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from oddsportal_ou_scraper import ou_scraper
+from .oddsportal_ou_scraper import ou_scraper
+from .write_csv import make_csv
 
 def isfloat(num):
     try:
@@ -61,7 +63,7 @@ def create_json_from_data(data):
                 previous_ligue = previous_item
         if (item.isnumeric() and begin == 'Step5'):
             temp_obj["bs"] = item
-            begin = ""
+            begin = "Step1"
             ret_data.append(copy.deepcopy(temp_obj))
             temp_obj = {}
         if (isfloat(item) and begin == 'Step4'):
@@ -89,7 +91,7 @@ def scraper(tdate):
     DRIVER_PATH = '/usr/local/bin/chromedriver'
     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
-    url = 'https://www.oddsportal.com/matches/soccer/' + tdate
+    url = 'https://www.oddsportal.com/matches/soccer/' + tdate + "/?r=2"
     print("URL :", url)
     driver.get(url)
     sleep(3)
@@ -99,6 +101,7 @@ def scraper(tdate):
     driver.get(url)
     sleep(3)
     driver.refresh()
+    sleep(3)
     tbody = driver.find_element_by_xpath('//*[@id="table-matches"]/table/tbody')
     data = tbody.text.replace(" 1 X 2 B's", "")
     links = []
@@ -118,9 +121,10 @@ def get_all_the_ou_stats(matchs):
     for match in matchs:
         match["ou_stats"] = ou_scraper(match.get("ou_link"))
 
-data, links = scraper(get_tomorrow_date())
-data = create_json_from_data(data)
-create_oe_links(data, links)
-get_all_the_ou_stats(data)
-
-print(json.dumps(data, indent=4))
+def let_the_magic_begin():
+    data, links = scraper(get_tomorrow_date())
+    data = create_json_from_data(data)
+    create_oe_links(data, links)
+    get_all_the_ou_stats(data)
+    make_csv(data)
+    return data

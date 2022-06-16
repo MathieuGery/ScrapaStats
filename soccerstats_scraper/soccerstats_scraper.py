@@ -2,6 +2,7 @@
 import requests
 import csv
 import re
+import datetime
 from bs4 import BeautifulSoup
 
 # Set the URL you want to webscrape from
@@ -13,6 +14,10 @@ def make_csv(data):
         writer = csv.writer(f)
         writer.writerow(header)
         writer.writerows(data)
+
+def get_tomorrow_date_for_csv():
+    tdate = datetime.date.today() + datetime.timedelta(days=1)
+    return str(tdate).replace("-", "/")
 
 def scrap():
     # Connect to the URL
@@ -27,9 +32,9 @@ def scrap():
     data = []
     for key in table_data:
         temp_row = []
+        temp_row.append(get_tomorrow_date_for_csv())
         for row in key.findAll("td"):
             temp_row.append(re.sub(CLEANR, '', str(row).replace(" ", "")))
         data.append(temp_row)
+    make_csv(data)
     return data
-
-make_csv(scrap())
