@@ -1,6 +1,8 @@
+from time import sleep
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from time import sleep
 
 def ou_scraper(url):
     options = Options()
@@ -12,6 +14,7 @@ def ou_scraper(url):
 
     print("URL :", url)
     driver.get(url)
+    sleep(3)
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, "html.parser")
     tables = soup.find_all('div', {"class": ["table-container"], "style": ""})
