@@ -14,7 +14,7 @@ def ou_scraper(url):
 
     print("URL :", url)
     driver.get(url)
-    sleep(3)
+    sleep(4)
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, "html.parser")
     tables = soup.find_all('div', {"class": ["table-container"], "style": ""})

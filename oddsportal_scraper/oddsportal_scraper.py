@@ -91,7 +91,7 @@ def scraper(tdate):
     DRIVER_PATH = '/usr/local/bin/chromedriver'
     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
-    url = 'https://www.oddsportal.com/matches/soccer/' + tdate + "/?r=2"
+    url = 'https://www.oddsportal.com/matches/soccer/' + tdate
     print("URL :", url)
     driver.get(url)
     sleep(3)
@@ -101,7 +101,6 @@ def scraper(tdate):
     driver.get(url)
     sleep(3)
     driver.refresh()
-    sleep(3)
     tbody = driver.find_element_by_xpath('//*[@id="table-matches"]/table/tbody')
     data = tbody.text.replace(" 1 X 2 B's", "")
     links = []
