@@ -1,18 +1,16 @@
-import json
-
-from numpy import array
+import time
+from datetime import datetime
 from make_csv import make_csv
 from oddsportal_scraper.oddsportal_scraper import let_the_magic_begin
 from soccerstats_scraper.soccerstats_scraper import scrap
 from difflib import SequenceMatcher
 
+start_time = time.time()
+now = datetime.now()
+current_time = now.strftime("%H:%M:%S")
+print("Start at: ", current_time)
 soccerstats_data = scrap()
 oddsportal_data = let_the_magic_begin()
-
-def find_ou_in_match(ou_oddsportal, ou):
-    if (ou_oddsportal == ou):
-        return True
-    return False
 
 def find_the_match1(matchname, oddsportaldatas):
     highest = 0
@@ -42,7 +40,6 @@ for match in soccerstats_data:
         match.append(obj.get("X"))
         match.append(obj.get("2"))
         obj = clean_obj(obj.get("ou_stats"), over_under)
-        print(len(obj))
         for i in over_under:
             find = False
             for ou in obj:
@@ -55,3 +52,4 @@ for match in soccerstats_data:
                 match.append("None")
 
 make_csv(soccerstats_data)
+print("--- %s seconds ---" % round((time.time() - start_time), 2))
