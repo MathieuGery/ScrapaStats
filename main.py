@@ -48,8 +48,8 @@ for match in soccerstats_data:
                     match.append(ou.get("under"))
                     find = True
             if (find == False):
-                match.append("None")
-                match.append("None")
+                match.append("")
+                match.append("")
 
 make_csv(soccerstats_data)
 print("--- %s seconds ---" % round((time.time() - start_time), 2))
