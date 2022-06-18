@@ -1,4 +1,5 @@
 from asyncore import write
+from lib2to3.pgen2 import driver
 import re
 import json
 import datetime
@@ -9,6 +10,7 @@ from .coockies import coockies
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from .oddsportal_ou_scraper import ou_scraper
+from .oddsportal_ou_scraper import create_diver_for_ou_scraper
 from .write_csv import make_csv
 
 def isfloat(num):
@@ -117,13 +119,32 @@ def create_oe_links(matchs, links):
         match["ou_link"] = extract_link_to_oe(link, links)
 
 def get_all_the_ou_stats(matchs):
+    ou_driver = create_diver_for_ou_scraper()
+    print("Start Scraping Overs/Unders")
+    total = len(matchs)
+    i = 1
     for match in matchs:
-        match["ou_stats"] = ou_scraper(match.get("ou_link"))
+        print("WIP: " + str(i) + "/" + str(total))
+        match["ou_stats"] = ou_scraper(match.get("ou_link"), ou_driver)
+        print("LEN: ", len(match["ou_stats"]))
+        if (len(match["ou_stats"]) == 0):
+            print("FULL NONE HERE")
+            print("so relaunch")
+            match["ou_stats"] = ou_scraper(match.get("ou_link"), ou_driver)
+        i += 1
+    ou_driver.quit()
+
+def make_json(data):
+    json_object = json.dumps(data, indent=4)
+    with open("data.json", "w") as outfile:
+        outfile.write(json_object)
 
 def let_the_magic_begin():
     data, links = scraper(get_tomorrow_date())
     data = create_json_from_data(data)
     create_oe_links(data, links)
+    print("Finish Scraping matchs")
     get_all_the_ou_stats(data)
+    make_json(data)
     make_csv(data)
     return data

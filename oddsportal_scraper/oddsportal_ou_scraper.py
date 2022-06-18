@@ -1,20 +1,24 @@
+from textwrap import indent
 from time import sleep
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from time import sleep
 
-def ou_scraper(url):
+def create_diver_for_ou_scraper():
     options = Options()
     options.headless = True
     options.add_argument("--window-size=1920,1200")
 
     DRIVER_PATH = '/usr/local/bin/chromedriver'
     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+    return driver
+
+def ou_scraper(url, driver):
 
     print("URL :", url)
     driver.get(url)
-    sleep(4)
+    # sleep(4)
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, "html.parser")
     tables = soup.find_all('div', {"class": ["table-container"], "style": ""})
@@ -30,5 +34,4 @@ def ou_scraper(url):
             temp_obj["under"] = infos[1].text
             temp_obj["payout"] = tab.find('span').text
         ret.append(temp_obj)
-    driver.quit()
     return ret
