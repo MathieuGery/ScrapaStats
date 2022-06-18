@@ -96,13 +96,14 @@ def scraper(tdate):
     url = 'https://www.oddsportal.com/matches/soccer/' + tdate
     print("URL :", url)
     driver.get(url)
-    sleep(3)
+    sleep(4)
     driver.delete_all_cookies()
     for coockie in coockies:
         driver.add_cookie(coockie)
     driver.get(url)
-    sleep(3)
+    sleep(4)
     driver.refresh()
+    sleep(4)
     tbody = driver.find_element_by_xpath('//*[@id="table-matches"]/table/tbody')
     data = tbody.text.replace(" 1 X 2 B's", "")
     links = []
