@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 soccerstats.csv
 .DS_Store
+google_secrets.json
+final.csv
+config.py
