@@ -138,7 +138,7 @@ def get_all_the_ou_stats(matchs):
 
 def make_json(data):
     json_object = json.dumps(data, indent=4)
-    with open("data.json", "w") as outfile:
+    with open("./results/data.json", "w") as outfile:
         outfile.write(json_object)
 
 def let_the_magic_begin():

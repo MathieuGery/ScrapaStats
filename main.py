@@ -4,6 +4,7 @@ from make_csv import make_csv
 from oddsportal_scraper.oddsportal_scraper import let_the_magic_begin
 from soccerstats_scraper.soccerstats_scraper import scrap
 from difflib import SequenceMatcher
+from upload_to_gsheet import upload_to_gsheet
 
 start_time = time.time()
 now = datetime.now()
@@ -52,4 +53,5 @@ for match in soccerstats_data:
                 match.append("")
 
 make_csv(soccerstats_data)
+upload_to_gsheet()
 print("--- %s seconds ---" % round((time.time() - start_time), 2))

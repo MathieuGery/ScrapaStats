@@ -10,7 +10,7 @@ url = 'https://www.soccerstats.com/matches.asp?matchday=2&listing=2'
 
 def make_csv(data):
     header = ["Country", "BTS", "FTS", "CS", "W%", "TG", "PPG", "GP", "Scope", "Pays", "Time", "Pays", "Scope", "GP", "PPG", "TG", "W%", "CS", "FTS", "BTS"]
-    with open('soccerstats.csv', 'w', encoding='UTF8', newline='') as f:
+    with open('./results/soccerstats.csv', 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         writer.writerows(data)
