@@ -132,3 +132,6 @@ soccerstats.csv
 google_secrets.json
 final.csv
 config.py
+oddsportal.csv
+.gitignore
+data.json
