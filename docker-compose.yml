@@ -1,0 +1,7 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  scrapastats:
+    image: ghcr.io/mathieugery/scrapastats/scrapastats:latest
+    volumes:
+      - ${PWD}/config.py:/app/config.py
+      - ${PWD}/google_secrets.json:/app/google_secrets.json
