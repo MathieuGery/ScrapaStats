@@ -11,7 +11,10 @@ url = 'https://www.soccerstats.com/matches.asp?matchday=2&listing=2'
 
 def make_csv(data):
     #Create results folder
-    os.mkdir("./results")
+    try:
+        os.mkdir("./results")
+    except:
+        pass
     header = ["Country", "BTS", "FTS", "CS", "W%", "TG", "PPG", "GP", "Scope", "Pays", "Time", "Pays", "Scope", "GP", "PPG", "TG", "W%", "CS", "FTS", "BTS"]
     with open('./results/soccerstats.csv', 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
