@@ -1,5 +1,3 @@
-from asyncore import write
-from lib2to3.pgen2 import driver
 import re
 import json
 import datetime
@@ -8,10 +6,8 @@ import copy
 from difflib import SequenceMatcher
 from .coockies import coockies
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from .oddsportal_ou_scraper import ou_scraper
 from .oddsportal_ou_scraper import create_diver_for_ou_scraper
-from .write_csv import make_csv
 
 def isfloat(num):
     try:
@@ -148,5 +144,4 @@ def let_the_magic_begin():
     print("Finish Scraping matchs")
     get_all_the_ou_stats(data)
     make_json(data)
-    make_csv(data)
     return data
