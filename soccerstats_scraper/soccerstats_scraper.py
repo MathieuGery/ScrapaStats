@@ -79,6 +79,5 @@ def scrap_yesterday(url):
     
     for top, bottom in zip(scores_top_array, scores_bottom_array):
         if (top[0] and top[1] and bottom[0] and bottom[1]):
-            data.append([top[0], top[1]])
-            data.append([bottom[0], bottom[1]])
+            data.append([top[0], bottom[0], top[1], bottom[1]])
     return data
