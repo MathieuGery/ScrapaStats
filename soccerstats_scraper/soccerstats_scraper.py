@@ -40,7 +40,9 @@ def scrap(url):
         temp_row.append(get_tomorrow_date_for_csv())
         for row in key.findAll("td"):
             temp_row.append(re.sub(CLEANR, '', str(row).replace(" ", "")))
-        data.append(temp_row)
+        date = get_tomorrow_date_for_csv().replace("/", "")
+        id = date + temp_row[10] + temp_row[12]
+        data.append([id.replace(" ", "-")] + temp_row)
     return data
 
 def check_int(str):
