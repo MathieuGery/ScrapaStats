@@ -48,7 +48,7 @@ def clean_obj(obj, over_under):
 
 for match in soccerstats_data:
     over_under = ["Over/Under +1.5", "Over/Under +2", "Over/Under +2.5", "Over/Under +3", "Over/Under +3.5", "Over/Under +4", "Over/Under +4.5"]
-    obj = find_the_match1(match[10] + " - " + match[12], oddsportal_data)
+    obj = find_the_match1(match[11] + " - " + match[13], oddsportal_data)
     if (obj):
         match.append(obj.get("1").replace(".", ","))
         match.append(obj.get("X").replace(".", ","))
