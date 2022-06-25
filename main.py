@@ -15,8 +15,16 @@ print("Start at: ", current_time)
 soccerstats_data = scrap("https://www.soccerstats.com/matches.asp?matchday=2&listing=2")
 # Scraping the scores from yesterday.
 prev_soccerstats_data = scrap_yesterday("https://www.soccerstats.com/matches.asp?matchday=0&daym=yesterday")
+oddsportal_data = {}
 
-oddsportal_data = let_the_magic_begin()
+while(True):
+    try:
+        oddsportal_data = let_the_magic_begin()
+    except:
+        print("Error with selenium, try again...")
+        pass
+    else:
+        break
 
 def find_the_match1(matchname, oddsportaldatas):
     highest = 0
