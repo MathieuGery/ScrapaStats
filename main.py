@@ -1,8 +1,9 @@
 import time
 from datetime import datetime
-from make_csv import make_csv
+from make_csv import make_csv, make_csv_for_yesterday_scores
 from oddsportal_scraper.oddsportal_scraper import let_the_magic_begin
 from soccerstats_scraper.soccerstats_scraper import scrap
+from soccerstats_scraper.soccerstats_scraper import scrap_yesterday
 from difflib import SequenceMatcher
 from upload_to_gsheet import upload_to_gsheet
 
@@ -10,7 +11,11 @@ start_time = time.time()
 now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
 print("Start at: ", current_time)
-soccerstats_data = scrap()
+# Scraping the data from the website.
+soccerstats_data = scrap("https://www.soccerstats.com/matches.asp?matchday=2&listing=2")
+# Scraping the scores from yesterday.
+prev_soccerstats_data = scrap_yesterday("https://www.soccerstats.com/matches.asp?matchday=0&daym=yesterday")
+
 oddsportal_data = let_the_magic_begin()
 
 def find_the_match1(matchname, oddsportaldatas):
@@ -53,5 +58,6 @@ for match in soccerstats_data:
                 match.append("")
 
 make_csv(soccerstats_data)
+make_csv_for_yesterday_scores(prev_soccerstats_data)
 upload_to_gsheet()
 print("--- %s seconds ---" % round((time.time() - start_time), 2))
