@@ -20,8 +20,9 @@ oddsportal_data = {}
 while(True):
     try:
         oddsportal_data = let_the_magic_begin()
-    except:
+    except Exception as e:
         print("Error with selenium, try again...")
+        print(e)
         pass
     else:
         break
