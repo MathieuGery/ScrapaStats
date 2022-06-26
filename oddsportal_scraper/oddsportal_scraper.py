@@ -142,4 +142,5 @@ def let_the_magic_begin():
     print("Finish Scraping matchs")
     get_all_the_ou_stats(data)
     make_json(data)
+    print("im here")
     return data
