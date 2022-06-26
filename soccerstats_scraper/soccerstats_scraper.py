@@ -24,6 +24,10 @@ def get_tomorrow_date_for_csv():
     tdate = datetime.date.today() + datetime.timedelta(days=1)
     return str(tdate).replace("-", "/")
 
+def get_yesterday_date_for_csv():
+    tdate = datetime.date.today() - datetime.timedelta(days=1)
+    return str(tdate).replace("-", "/")
+
 def scrap(url):
     # Connect to the URL
     response = requests.get(url)
@@ -81,5 +85,7 @@ def scrap_yesterday(url):
     
     for top, bottom in zip(scores_top_array, scores_bottom_array):
         if (top[0] and top[1] and bottom[0] and bottom[1]):
-            data.append([top[0], bottom[0], top[1], bottom[1]])
+            date = get_yesterday_date_for_csv().replace("/", "")
+            id = date +top[0] + bottom[0]
+            data.append([id.replace(" ", "-"), top[0], bottom[0], top[1], bottom[1]])
     return data

@@ -9,7 +9,7 @@ def make_csv(data):
         writer.writerows(data)
 
 def make_csv_for_yesterday_scores(data):
-    header =  ["Home Team", "Away Team", "Score Home", "Score Away"]
+    header =  ["Id", "Home Team", "Away Team", "Score Home", "Score Away"]
     with open('./results/yesterday_scores.csv', 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(header)
