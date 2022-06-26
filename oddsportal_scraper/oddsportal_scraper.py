@@ -141,6 +141,7 @@ def let_the_magic_begin():
     create_oe_links(data, links)
     print("Finish Scraping matchs")
     get_all_the_ou_stats(data)
+    print("im iowsdjgoidjrog")
     make_json(data)
     print("im here")
     return data
