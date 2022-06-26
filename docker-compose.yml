@@ -5,4 +5,4 @@ services:
     volumes:
       - ${PWD}/config.py:/app/config.py
       - ${PWD}/google_secrets.json:/app/google_secrets.json
-
+      - ${PWD}/results:/app/results
