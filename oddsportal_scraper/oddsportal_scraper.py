@@ -122,7 +122,6 @@ def get_all_the_ou_stats(matchs):
     for match in matchs:
         print("WIP: " + str(i) + "/" + str(total))
         match["ou_stats"] = ou_scraper(match.get("ou_link"), ou_driver)
-        print("LEN: ", len(match["ou_stats"]))
         if (len(match["ou_stats"]) == 0):
             print("FULL NONE HERE")
             print("so relaunch")

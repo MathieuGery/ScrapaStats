@@ -1,5 +1,3 @@
-from textwrap import indent
-from time import sleep
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -17,9 +15,7 @@ def create_diver_for_ou_scraper():
 
 def ou_scraper(url, driver):
 
-    print("URL :", url)
     driver.get(url)
-    # sleep(4)
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, "html.parser")
     tables = soup.find_all('div', {"class": ["table-container"], "style": ""})
