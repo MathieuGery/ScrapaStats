@@ -1,5 +1,3 @@
-# Import libraries
-from operator import contains
 import requests
 import csv
 import re
@@ -63,8 +61,6 @@ def scrap_yesterday(url):
     # Parse HTML and save to BeautifulSoup object¶
     soup = BeautifulSoup(response.text, "html5lib")
 
-    # table_data = soup.find_all('td', class_="steam")style="border-bottom:1px solid #cccccc;"
-    # table_data = soup.findAll('tr', {'bgcolor': '#f0f0f0', 'style': ['border-top:1px solid #cccccc;', 'border-bottom:1px solid #cccccc;']})
     scores_top = soup.find_all('tr', {'style': 'border-top:1px solid #cccccc;', 'bgcolor': '#f0f0f0', 'height': 22})
     scores_bottom = soup.find_all('tr', {'style': 'border-bottom:1px solid #cccccc;', 'bgcolor': '#f0f0f0', 'height': 22})
     scores_top_array = []
