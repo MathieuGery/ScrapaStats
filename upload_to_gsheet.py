@@ -1,6 +1,6 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from config import emails, sheetid
+from config import emails, sheetid, sheet2id
 
 def upload_to_gsheet():
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
@@ -27,4 +27,4 @@ def upload_to_gsheet():
     content = open('./results/final.csv', 'r').read()
     client.import_csv(sheetid, content)
     content = open('./results/yesterday_scores.csv', 'r').read()
-    client.import_csv(sheet2.id, content)
+    client.import_csv(sheet2id, content)
