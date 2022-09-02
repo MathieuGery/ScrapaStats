@@ -18,6 +18,7 @@ def ou_scraper(url, driver):
     driver.get(url)
     page_source = driver.page_source
     soup = BeautifulSoup(page_source, "html.parser")
+    print("find all ou in table container for url: ", url)
     tables = soup.find_all('div', {"class": ["table-container"], "style": ""})
     ret = []
     for tab in tables:

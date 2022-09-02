@@ -99,12 +99,15 @@ def scraper(tdate):
     driver.get(url)
     driver.refresh()
     sleep(5)
+    print("test 1")
     tbody = driver.find_element_by_xpath('//*[@id="table-matches"]/table/tbody')
     data = tbody.text.replace(" 1 X 2 B's", "")
     links = []
+    print("test 2")
     for elem in driver.find_elements_by_xpath("//a[@href]"):
         links.append(elem.get_attribute("href"))
     driver.quit()
+    print("quit chrome instance")
     return (data.splitlines(), links)
 
 def create_oe_links(matchs, links):
@@ -136,8 +139,11 @@ def make_json(data):
 
 def let_the_magic_begin():
     data, links = scraper(get_tomorrow_date())
+    print("create json form data")
     data = create_json_from_data(data)
+    print("create oe links")
     create_oe_links(data, links)
+    print("get all the ou stats")
     get_all_the_ou_stats(data)
     make_json(data)
     return data
