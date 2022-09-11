@@ -23,7 +23,7 @@ class Calc:
                     res += f"⏱  Horaire: {item.get('M')}\n"
                     res += f"🏆 Cote: {item.get('M')}\n\n"
         if (len(res) == 23):
-            res += "⛔️ No bet for today"
+            res += "⏩ No bet for today"
         return res
 
 def create_json(data):
