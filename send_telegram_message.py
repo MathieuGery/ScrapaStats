@@ -10,14 +10,20 @@ class Calc:
     def calc1(self):
         "Si les valeurs de la colonne H ET de la colonne R sont supérieures ou égales à 2 ET si les valeurs de la colonne"
         "AA est supérieure ou égale à 1,49 alors à ce moment je voudrais que les infos du match soient envoyées sur Telegram."
-        res = []
+        res = "🚨 Strategie de test 🚨\n\n"
+        print(len(res))
         for item in self.data:
             if (item.get("H") != "" and item.get("R") != "" and item.get("AA") != ""):
                 h = float(item.get("H").replace(",", "."))
                 r = float(item.get("R").replace(",", "."))
                 aa = float(item.get("AA").replace(",", "."))
                 if (h >= 2 and r >= 2 and aa >= 1.49):
-                    print("ca match:"," ",item.get("L"), "", h, " ",r ," ", aa)
+                    res += f"⚽️ Match: {item.get('L')} / {item.get('N')}\n"
+                    res += f"📅 Date: {item.get('B')}\n"
+                    res += f"⏱  Horaire: {item.get('M')}\n"
+                    res += f"🏆 Cote: {item.get('M')}\n\n"
+        if (len(res) == 23):
+            res += "⛔️ No bet for today"
         return res
 
 def create_json(data):
