@@ -6,3 +6,8 @@ services:
       - ${PWD}/config.py:/app/config.py
       - ${PWD}/google_secrets.json:/app/google_secrets.json
       - ${PWD}/results:/app/results
+  scrapastats-telegram-notifications:
+    image: ghcr.io/mathieugery/scrapastats/scrapastats-telegram-notifications:latest
+    volumes:
+      - ${PWD}/config.py:/app/config.py
+      - ${PWD}/google_secrets.json:/app/google_secrets.json
