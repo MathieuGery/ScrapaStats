@@ -18,6 +18,7 @@ class Calc:
                 r = float(item.get("R").replace(",", "."))
                 aa = float(item.get("AA").replace(",", "."))
                 if (h >= 2 and r >= 2 and aa >= 1.49):
+                    res += f"🏳️ {item.get('C')}\n"
                     res += f"⚽️ Match: {item.get('L')} / {item.get('N')}\n"
                     res += f"📅 Date: {item.get('B')}\n"
                     res += f"⏱  Horaire: {item.get('M')}\n"
