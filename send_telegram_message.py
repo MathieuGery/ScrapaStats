@@ -7,11 +7,17 @@ class Calc:
     def __init__(self, data):
         self.data = data
     
+    def __check_if_null(self, array):
+        for item in array:
+            if item == "":
+                return False
+        return True
+
     def calc1(self):
         "Si les valeurs de la colonne H ET de la colonne R sont supérieures ou égales à 2 ET si les valeurs de la colonne"
         "AA est supérieure ou égale à 1,49 alors à ce moment je voudrais que les infos du match soient envoyées sur Telegram."
         res = "🚨 Over 2,5 🚨\n\n"
-        print(len(res))
+        size = len(res)
         for item in self.data:
             if (item.get("H") != "" and item.get("R") != "" and item.get("AA") != ""):
                 h = float(item.get("H").replace(",", "."))
@@ -23,7 +29,27 @@ class Calc:
                     res += f"📅 Date: {item.get('B')}\n"
                     res += f"⏱  Horaire: {item.get('M')}\n"
                     res += f"🏆 Cote: {item.get('AE')}\n\n"
-        if (len(res) == 23):
+        if (len(res) == size):
+            res += "⏩ No bet for tomorrow"
+        return res
+
+    def calc2(self):
+        res = "🚨 1X 🚨\n\n"
+        size = len(res)
+        for item in self.data:
+            if self.__check_if_null([item.get("I"), item.get("G"), item.get("X"), item.get("Y")]):
+                i = float(item.get("I").replace(",", "."))
+                g = float(item.get("G").replace(",", ".").replace("%", ""))
+                x = float(item.get("X").replace(",", "."))
+                y = float(item.get("Y").replace(",", "."))
+                var =  (x * y) / (x + y)
+                if (var >= 1.9 and i >= 2.2 and g >= 70):
+                    res += f"🏳️ {item.get('C')}\n"
+                    res += f"⚽️ Match: {item.get('L')} / {item.get('N')}\n"
+                    res += f"📅 Date: {item.get('B')}\n"
+                    res += f"⏱  Horaire: {item.get('M')}\n"
+                    res += f"🏆 Cote: {var}\n\n"
+        if (len(res) == size):
             res += "⏩ No bet for tomorrow"
         return res
 
@@ -60,6 +86,8 @@ def main():
     res = get_sheet(sheetid)
     calc_instance = Calc(res)
     calc = calc_instance.calc1()
+    send_message(calc)
+    calc = calc_instance.calc2()
     send_message(calc)
     return
 
