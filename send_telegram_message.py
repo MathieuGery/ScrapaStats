@@ -22,8 +22,9 @@ class Calc:
             if (item.get("H") != "" and item.get("R") != "" and item.get("AA") != ""):
                 h = float(item.get("H").replace(",", "."))
                 r = float(item.get("R").replace(",", "."))
+                j = float(item.get("J").replace(",", "."))
                 aa = float(item.get("AA").replace(",", "."))
-                if (h >= 2 and r >= 2 and aa >= 1.49):
+                if (h >= 2 and r >= 2 and aa >= 1.49 and j >= 3):
                     res += f"🏳️ {item.get('C')}\n"
                     res += f"⚽️ Match: {item.get('L')} / {item.get('N')}\n"
                     res += f"📅 Date: {item.get('B')}\n"
