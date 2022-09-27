@@ -26,7 +26,7 @@ class Calc:
                 aa = float(item.get("AA").replace(",", "."))
                 if (h >= 2 and r >= 2 and aa >= 1.49 and j >= 3):
                     res += f"🏳️ {item.get('C')}\n"
-                    res += f"⚽️ Match: {item.get('L')} / {item.get('N')}\n"
+                    res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
                     res += f"📅 Date: {item.get('B')}\n"
                     res += f"⏱  Horaire: {item.get('M')}\n"
                     res += f"🏆 Cote: {item.get('AE')}\n\n"
@@ -46,7 +46,7 @@ class Calc:
                 var =  (x * y) / (x + y)
                 if (var >= 1.9 and i >= 2.2 and g >= 70):
                     res += f"🏳️ {item.get('C')}\n"
-                    res += f"⚽️ Match: {item.get('L')} / {item.get('N')}\n"
+                    res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
                     res += f"📅 Date: {item.get('B')}\n"
                     res += f"⏱  Horaire: {item.get('M')}\n"
                     res += f"🏆 Cote: {var}\n\n"
