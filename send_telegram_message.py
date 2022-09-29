@@ -45,6 +45,7 @@ class Calc:
                 y = float(item.get("Y").replace(",", "."))
                 var =  (x * y) / (x + y)
                 if (var >= 1.9 and i >= 2.2 and g >= 70):
+                    var = str(round(var, 2)).replace(".", ",")
                     res += f"🏳️ {item.get('C')}\n"
                     res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
                     res += f"📅 Date: {item.get('B')}\n"
