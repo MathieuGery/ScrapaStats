@@ -19,17 +19,20 @@ class Calc:
         res = "🚨 Over 2,5 🚨\n\n"
         size = len(res)
         for item in self.data:
-            if (item.get("H") != "" and item.get("R") != "" and item.get("AA") != ""):
-                h = float(item.get("H").replace(",", "."))
-                r = float(item.get("R").replace(",", "."))
-                j = float(item.get("J").replace(",", "."))
-                aa = float(item.get("AA").replace(",", "."))
-                if (h >= 2 and r >= 2 and aa >= 1.49 and j >= 3):
-                    res += f"🏳️ {item.get('C')}\n"
-                    res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
-                    res += f"📅 Date: {item.get('B')}\n"
-                    res += f"⏱  Horaire: {item.get('M')}\n"
-                    res += f"🏆 Cote: {item.get('AE')}\n\n"
+            try:
+                if (item.get("H") != "" and item.get("R") != "" and item.get("AA") != ""):
+                    h = float(item.get("H").replace(",", "."))
+                    r = float(item.get("R").replace(",", "."))
+                    j = float(item.get("J").replace(",", "."))
+                    aa = float(item.get("AA").replace(",", "."))
+                    if (h >= 2 and r >= 2 and aa >= 1.49 and j >= 3):
+                        res += f"🏳️ {item.get('C')}\n"
+                        res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
+                        res += f"📅 Date: {item.get('B')}\n"
+                        res += f"⏱ Horaire: {item.get('M')}\n"
+                        res += f"🏆 Cote: {item.get('AE')}\n\n"
+            except Exception as e:
+                print(e)
         if (len(res) == size):
             res += "⏩ No bet for tomorrow"
         return res
@@ -38,19 +41,22 @@ class Calc:
         res = "🚨 1X 🚨\n\n"
         size = len(res)
         for item in self.data:
-            if self.__check_if_null([item.get("I"), item.get("G"), item.get("X"), item.get("Y")]):
-                i = float(item.get("I").replace(",", "."))
-                g = float(item.get("G").replace(",", ".").replace("%", ""))
-                x = float(item.get("X").replace(",", "."))
-                y = float(item.get("Y").replace(",", "."))
-                var =  (x * y) / (x + y)
-                if (var >= 1.9 and i >= 2.2 and g >= 70):
-                    var = str(round(var, 2)).replace(".", ",")
-                    res += f"🏳️ {item.get('C')}\n"
-                    res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
-                    res += f"📅 Date: {item.get('B')}\n"
-                    res += f"⏱  Horaire: {item.get('M')}\n"
-                    res += f"🏆 Cote: {var}\n\n"
+            try:
+                if self.__check_if_null([item.get("I"), item.get("G"), item.get("X"), item.get("Y")]):
+                    i = float(item.get("I").replace(",", "."))
+                    g = float(item.get("G").replace(",", ".").replace("%", ""))
+                    x = float(item.get("X").replace(",", "."))
+                    y = float(item.get("Y").replace(",", "."))
+                    var =  (x * y) / (x + y)
+                    if (var >= 1.9 and i >= 2.2 and g >= 70):
+                        var = str(round(var, 2)).replace(".", ",")
+                        res += f"🏳️ {item.get('C')}\n"
+                        res += f"⚽️ Match: {item.get('L')} - {item.get('N')}\n"
+                        res += f"📅 Date: {item.get('B')}\n"
+                        res += f"⏱  Horaire: {item.get('M')}\n"
+                        res += f"🏆 Cote: {var}\n\n"
+            except Exception as e:
+                print(e)
         if (len(res) == size):
             res += "⏩ No bet for tomorrow"
         return res
