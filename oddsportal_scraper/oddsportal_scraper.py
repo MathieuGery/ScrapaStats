@@ -105,7 +105,10 @@ def scraper(tdate):
     links = []
     print("test 2")
     for elem in driver.find_elements_by_xpath("//a[@href]"):
-        links.append(elem.get_attribute("href"))
+        try:
+            links.append(elem.get_attribute("href"))
+        except:
+            print("Element not found")
     driver.quit()
     print("quit chrome instance")
     return (data.splitlines(), links)
