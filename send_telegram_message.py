@@ -95,8 +95,8 @@ def main():
     calc_instance = Calc(res)
     calc = calc_instance.calc1()
     send_message(calc)
-    calc = calc_instance.calc2()
-    send_message(calc)
+    # calc = calc_instance.calc2()
+    # send_message(calc)
     return
 
 if __name__ == '__main__':
